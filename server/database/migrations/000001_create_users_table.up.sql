@@ -1,5 +1,5 @@
 -- Name: users; Type: TABLE; Schema: home_expenses; Owner: -
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users (
   id BIGSERIAL PRIMARY KEY,
   name VARCHAR(255),
   phone VARCHAR(255) NOT NULL,
