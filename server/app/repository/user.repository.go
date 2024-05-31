@@ -21,5 +21,5 @@ func NewUserRepository(c *context.Context, db *gorm.DB) *UserRepository {
 }
 
 func (repo *UserRepository) Find(user *models.User) error {
-	return repo.db.Where(user).First(&user).Error
+	return repo.db.Table("users").First(&user).Error
 }

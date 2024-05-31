@@ -26,6 +26,10 @@ func InitDb() *gorm.DB {
 	})
 
 	if err != nil {
+		log.Fatalf("Failed to migrate database: %v", err)
+	}
+
+	if err != nil {
 		log.Fatalf("Error connecting to database: %v", err)
 	}
 
@@ -47,12 +51,13 @@ func createLogger() logger.Interface {
 
 func dbConnectString() string {
 	return fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		"host=%s port=%s user=%s dbname=%s sslmode=%s TimeZone=%s password=%s",
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_USERNAME"),
-		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_DATABASE"),
 		os.Getenv("DB_SSL_MODE"),
+		os.Getenv("TIME_ZONE"),
+		os.Getenv("DB_PASSWORD"),
 	)
 }
