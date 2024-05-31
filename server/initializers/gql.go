@@ -12,7 +12,7 @@ import (
 )
 
 func GqlHandler(db *gorm.DB) gin.HandlerFunc {
-	schema, err := fetchSchema("./gql/schemas/")
+	schema, err := fetchSchema("./app/gql/schemas/")
 
 	if err != nil {
 		log.Fatalf("failed to get schema: %v", err)

@@ -2,6 +2,8 @@ package main
 
 import (
 	"os"
+	"server/app/models"
+	"server/app/repository"
 	"server/database"
 	"server/initializers"
 
@@ -18,4 +20,13 @@ func main() {
 	r.Use(initializers.CorsConfig())
 
 	r.POST("/gql", initializers.GqlHandler(database.Db))
+
+	userRepo := repository.NewUserRepository(nil, database.Db)
+	user := models.User{
+		Phone: "0865882991",
+	}
+
+	userRepo.Find(&user)
+
+	r.Run()
 }

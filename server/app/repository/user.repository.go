@@ -1,13 +1,25 @@
-package repositories
+package repository
 
-import "gorm.io/gorm"
+import (
+	"context"
+	"server/app/models"
+
+	"gorm.io/gorm"
+)
 
 type UserRepository struct {
-	db *gorm.DB
+	Repository
 }
 
-func NewUserRepository(db *gorm.DB) *UserRepository {
+func NewUserRepository(c *context.Context, db *gorm.DB) *UserRepository {
 	return &UserRepository{
-		db: db,
+		Repository: Repository{
+			db:  db,
+			ctx: c,
+		},
 	}
+}
+
+func (repo *UserRepository) Find(user *models.User) error {
+	return repo.db.Where(user).First(&user).Error
 }
