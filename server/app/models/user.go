@@ -9,6 +9,8 @@ import (
 
 type User struct {
 	ID                int32
+	FamilyId          int32
+	Name              *string
 	Phone             string
 	EncryptedPassword string
 	CreatedAt         time.Time

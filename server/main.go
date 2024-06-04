@@ -13,6 +13,7 @@ func main() {
 	os.Setenv("TZ", os.Getenv("TIME_ZONE"))
 	initializers.LoadEnv()
 	initializers.LoadDb()
+	initializers.Seed()
 
 	r := gin.Default()
 
