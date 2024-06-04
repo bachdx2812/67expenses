@@ -12,7 +12,7 @@ POSTGRESQL_URL=postgres://$(POSTGRES_USERNAME):$(POSTGRES_PASSWORD)@$(POSTGRES_H
 db.migrate:
 	migrate -path $(MIGRATIONS_FOLDER) -database "$(POSTGRESQL_URL)" --verbose up
 
-db.migrate.rollback:
+db.rollback:
 	migrate -path $(MIGRATIONS_FOLDER) -database "$(POSTGRESQL_URL)" --verbose down ${STEP}
 
 db.migrate.force:
