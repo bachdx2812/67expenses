@@ -1,0 +1,4 @@
+input NewExpenseInput {
+  date: String
+  content: String
+}

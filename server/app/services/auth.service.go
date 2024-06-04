@@ -4,7 +4,7 @@ import (
 	"context"
 	"server/app/exceptions"
 	"server/app/helpers"
-	"server/app/repository"
+	"server/app/repositories"
 
 	"gorm.io/gorm"
 )
@@ -48,7 +48,7 @@ func (service *AuthService) validate() error {
 }
 
 func (service *AuthService) getUserAndGenerateToken() (*string, error) {
-	repo := repository.NewUserRepository(service.Ctx, service.Db)
+	repo := repositories.NewUserRepository(service.Ctx, service.Db)
 
 	if user, err := repo.Auth(*service.Phone, *service.Password); err != nil {
 		return nil, exceptions.NewUnprocessableContentError("User not found", exceptions.ResourceModificationError{

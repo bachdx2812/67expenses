@@ -1,7 +1,7 @@
 package constants
 
 const (
-	AuthorizationHeader = "BhmAIO-Authorization"
+	AuthorizationHeader = "Authorization"
 	GinContextKey       = "AIOContextKey"
 	ContextCurrentUser  = "CurrentUser"
 

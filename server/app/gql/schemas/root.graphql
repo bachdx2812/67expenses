@@ -8,4 +8,6 @@ type Query {
 
 type Mutation {
   signIn(phone: String, password: String): AccessToken
+
+  createExpense(input: NewExpenseInput!): Expense
 }

@@ -7,7 +7,7 @@ import (
 	"server/app/exceptions"
 	"server/app/models"
 	"server/app/pkg/jsonWebToken"
-	"server/app/repository"
+	"server/app/repositories"
 	"server/database"
 	"strings"
 
@@ -17,11 +17,10 @@ import (
 func extractBearerToken(header string) (string, error) {
 	if header == "" {
 		return "", exceptions.NewUnauthorizedError("Bad header value given")
-
 	}
 
 	jwtToken := strings.Split(header, " ")
-	if len(jwtToken) != 2 {
+	if len(jwtToken) != 2 && jwtToken[0] != "Bearer" {
 		return "", exceptions.NewUnauthorizedError("Incorrectly formatted authorization header")
 	}
 
@@ -52,7 +51,7 @@ func JwtTokenCheck(c *gin.Context) {
 	if parseError == nil {
 		user := models.User{ID: uid}
 
-		repo := repository.NewUserRepository(nil, database.Db)
+		repo := repositories.NewUserRepository(nil, database.Db)
 
 		if err := repo.Find(&user); err == nil {
 			c.Set(constants.ContextCurrentUser, user)

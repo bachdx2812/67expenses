@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"server/app/pkg/auths"
 	"server/database"
 	"server/initializers"
 
@@ -17,7 +18,12 @@ func main() {
 
 	r.Use(initializers.CorsConfig())
 
-	r.POST("/gql", initializers.GqlHandler(database.Db))
+	r.POST(
+		"/gql",
+		auths.JwtTokenCheck,
+		auths.GinContextToContextMiddleware(),
+		initializers.GqlHandler(database.Db),
+	)
 
 	r.Run()
 }

@@ -1,0 +1,6 @@
+type Expense {
+  id: Int!
+  userID: Int!
+  content: String!
+  date: String!
+}
