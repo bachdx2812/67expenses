@@ -8,7 +8,7 @@ type Query {
 }
 
 type Mutation {
-  signIn(phone: String, password: String): AccessToken
+  signIn(input: SignInInput!): AccessToken
 
   addMemberToFamily(input: AddMemberToFamilyInput!): Family
   createExpense(input: NewExpenseInput!): Expense

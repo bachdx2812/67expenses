@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"server/app/exceptions"
+	gqlInputs "server/app/gql/inputs"
 	"server/app/helpers"
 	"server/app/repositories"
 
@@ -10,8 +11,7 @@ import (
 )
 
 type AuthService struct {
-	Phone    *string
-	Password *string
+	gqlInputs.SignInInputForm
 
 	Ctx *context.Context
 	Db  *gorm.DB

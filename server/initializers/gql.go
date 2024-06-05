@@ -1,8 +1,10 @@
 package initializers
 
 import (
+	"io/fs"
 	"log"
 	"os"
+	"path/filepath"
 	"server/app/gql/resolvers"
 
 	"github.com/gin-gonic/gin"
@@ -31,22 +33,33 @@ func ginSchemaHandler(gqlSchema *graphql.Schema) gin.HandlerFunc {
 	}
 }
 
+// fetchSchema reads all files in the specified directory and its subdirectories
+// and returns their concatenated contents as a string.
 func fetchSchema(schemaPath string) (string, error) {
-	entries, err := os.ReadDir(schemaPath)
-	if err != nil {
-		return "", err
-	}
-
 	var schemaContent []byte
 
-	for _, entry := range entries {
-		filePath := schemaPath + entry.Name()
-		content, err := os.ReadFile(filePath)
+	err := filepath.WalkDir(schemaPath, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
-			log.Printf("failed to read file %s: %v", filePath, err)
-			continue
+			return err
+		}
+
+		// Skip directories, we only want to read files
+		if d.IsDir() {
+			return nil
+		}
+
+		content, err := os.ReadFile(path)
+		if err != nil {
+			log.Printf("failed to read file %s: %v", path, err)
+			return nil // Continue walking the directory tree
 		}
 		schemaContent = append(schemaContent, content...)
+
+		return nil
+	})
+
+	if err != nil {
+		return "", err
 	}
 
 	return string(schemaContent), nil

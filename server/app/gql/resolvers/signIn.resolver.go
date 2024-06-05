@@ -10,9 +10,8 @@ import (
 
 func (r *Resolver) SignIn(ctx context.Context, args gqlInputs.SignInInput) (*gqlTypes.AccessToken, error) {
 	service := services.AuthService{
-		Phone:    args.Phone,
-		Password: args.Password,
-		Db:       database.Db,
+		SignInInputForm: args.Input,
+		Db:              database.Db,
 	}
 
 	token, err := service.Execute()
