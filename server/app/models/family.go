@@ -3,8 +3,9 @@ package models
 import "time"
 
 type Family struct {
-	Id        int32
+	ID        int32
 	Name      string
+	Users     []User
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

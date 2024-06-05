@@ -1,0 +1,7 @@
+type User {
+  id: Int!
+  name: String!
+  phone: String!
+  familyId: Int!
+  family: Family
+}

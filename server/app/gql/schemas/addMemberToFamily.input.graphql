@@ -1,0 +1,5 @@
+input AddMemberToFamilyInput {
+  phone: String
+  name: String
+  password: String
+}

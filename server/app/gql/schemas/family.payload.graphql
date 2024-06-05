@@ -1,0 +1,5 @@
+type Family {
+  id: Int!
+  name: String!
+  users: [User!]!
+}

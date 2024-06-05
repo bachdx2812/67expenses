@@ -11,11 +11,11 @@ func Seed() {
 	if db.Table("families").Find(&models.Family{}).RowsAffected == 0 {
 		db.Table("families").Create(&models.Family{
 			Name: "Bach Phuong",
-			Id:   1,
+			ID:   1,
 		})
 		db.Table("families").Create(&models.Family{
 			Name: "Thai An",
-			Id:   2,
+			ID:   2,
 		})
 	}
 

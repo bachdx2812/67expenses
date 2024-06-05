@@ -37,3 +37,12 @@ func (repo *UserRepository) Auth(phone string, password string) (u *models.User,
 
 	return &user, nil
 }
+
+func (repo *UserRepository) AddMemberToFamily(user models.User, family models.Family) error {
+	return repo.db.Table("users").Create(&models.User{
+		FamilyId:          family.ID,
+		Name:              user.Name,
+		Phone:             user.Phone,
+		EncryptedPassword: user.EncryptedPassword,
+	}).Error
+}
