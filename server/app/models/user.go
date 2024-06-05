@@ -10,6 +10,7 @@ import (
 type User struct {
 	ID                int32
 	FamilyId          int32
+	Family            Family
 	Name              *string
 	Phone             string
 	EncryptedPassword string

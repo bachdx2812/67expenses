@@ -4,6 +4,7 @@ schema {
 }
 
 type Query {
+  self: User!
 }
 
 type Mutation {

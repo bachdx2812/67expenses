@@ -19,7 +19,9 @@ func (u *UserType) Phone() string {
 }
 
 func (u *UserType) Family() *FamilyType {
-	return nil
+	return &FamilyType{
+		Family: u.User.Family,
+	}
 }
 
 func (u *UserType) FamilyId() int32 {

@@ -15,5 +15,13 @@ func (f *FamilyType) Name() string {
 }
 
 func (f *FamilyType) Users() []*UserType {
-	return nil
+	users := make([]*UserType, len(f.Family.Users))
+
+	for i, user := range f.Family.Users {
+		users[i] = &UserType{
+			User: user,
+		}
+	}
+
+	return users
 }
