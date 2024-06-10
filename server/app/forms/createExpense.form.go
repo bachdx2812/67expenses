@@ -12,7 +12,7 @@ import (
 
 type CreateExpenseForm struct {
 	Form
-	*gqlInputs.NewExpenseInputForm
+	Input   *gqlInputs.NewExpenseInputForm
 	Expense models.Expense
 	repo    repositories.ExpenseRepository
 }
@@ -22,30 +22,30 @@ func NewCreateExpenseForm(
 	expense *models.Expense,
 ) CreateExpenseForm {
 	form := CreateExpenseForm{
-		Form:                Form{},
-		NewExpenseInputForm: input,
-		Expense:             *expense,
-		repo:                *repositories.NewExpenseRepository(nil, database.Db),
+		Form:    Form{},
+		Input:   input,
+		Expense: *expense,
+		repo:    *repositories.NewExpenseRepository(nil, database.Db),
 	}
 
-	form.assignAttributes(input)
+	form.assignAttributes()
 
 	return form
 }
 
-func (form *CreateExpenseForm) assignAttributes(input *gqlInputs.NewExpenseInputForm) {
+func (form *CreateExpenseForm) assignAttributes() {
 	form.AddAttributes(
 		&formAttributes.StringAttribute{
 			FieldAttribute: formAttributes.FieldAttribute{
 				Code: "Content",
 			},
-			Value: helpers.GetStringOrDefault(input.Content),
+			Value: helpers.GetStringOrDefault(form.Input.Content),
 		},
 		&formAttributes.TimeAttribute{
 			FieldAttribute: formAttributes.FieldAttribute{
 				Code: "Date",
 			},
-			Value: helpers.GetStringOrDefault(input.Date),
+			Value: helpers.GetStringOrDefault(form.Input.Date),
 		},
 	)
 }
@@ -74,7 +74,7 @@ func (form *CreateExpenseForm) validateContent() *CreateExpenseForm {
 	field.ValidateRequired()
 
 	if field.IsClean() {
-		form.Expense.Content = *form.Content
+		form.Expense.Content = *form.Input.Content
 	}
 
 	return form
@@ -86,7 +86,7 @@ func (form *CreateExpenseForm) validateDate() *CreateExpenseForm {
 	field.ValidateRequired()
 
 	if field.IsClean() {
-		form.Expense.Date = *form.Date
+		form.Expense.Date = *form.Input.Date
 	}
 
 	return form
