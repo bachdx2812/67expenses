@@ -9,3 +9,6 @@ CREATE TABLE users (
   updated_at TIMESTAMP(6) NOT NULL,
   UNIQUE (phone)
 );
+
+CREATE INDEX idx_users_phone ON users (phone);
+CREATE INDEX idx_users_family_id ON users (family_id);
