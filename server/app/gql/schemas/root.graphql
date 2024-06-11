@@ -5,11 +5,14 @@ schema {
 
 type Query {
   self: User!
+
+  expenseTypes: [ExpenseType!]!
 }
 
 type Mutation {
   signIn(input: SignInInput!): AccessToken
 
   addMemberToFamily(input: AddMemberToFamilyInput!): Family
+
   createExpense(input: NewExpenseInput!): Expense
 }

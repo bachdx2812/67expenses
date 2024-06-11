@@ -1,0 +1,4 @@
+type ExpenseType {
+  id: Int!
+  name: String!
+}
