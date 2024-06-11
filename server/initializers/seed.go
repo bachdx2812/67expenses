@@ -35,4 +35,16 @@ func Seed() {
 			Phone:    "$2a$10$8080LRcosHOEqh6kpHbQie/vgubdGQkXIvPQUkAaCzGZCs6FMsmc6",
 		})
 	}
+
+	if db.Table("expense_types").Find(&models.ExpenseType{}).RowsAffected == 0 {
+		db.Table("expense_types").Create(&models.ExpenseType{
+			Name: "Food",
+			ID:   1,
+		})
+
+		db.Table("expense_types").Create(&models.ExpenseType{
+			Name: "Transportation",
+			ID:   2,
+		})
+	}
 }
