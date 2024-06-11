@@ -1,6 +1,7 @@
 package forms
 
 import (
+	"server/app/constants"
 	"server/app/exceptions"
 	"server/app/formAttributes"
 	gqlInputs "server/app/gql/inputs"
@@ -35,6 +36,12 @@ func NewCreateExpenseForm(
 
 func (form *CreateExpenseForm) assignAttributes() {
 	form.AddAttributes(
+		&formAttributes.IntAttribute[int32]{
+			FieldAttribute: formAttributes.FieldAttribute{
+				Code: "ExpenseTypeId",
+			},
+			Value: helpers.GetInt32OrDefault(form.Input.ExpenseTypeId),
+		},
 		&formAttributes.StringAttribute{
 			FieldAttribute: formAttributes.FieldAttribute{
 				Code: "Content",
@@ -46,6 +53,12 @@ func (form *CreateExpenseForm) assignAttributes() {
 				Code: "Date",
 			},
 			Value: helpers.GetStringOrDefault(form.Input.Date),
+		},
+		&formAttributes.IntAttribute[int32]{
+			FieldAttribute: formAttributes.FieldAttribute{
+				Code: "Amount",
+			},
+			Value: helpers.GetInt32OrDefault(form.Input.Amount),
 		},
 	)
 }
@@ -59,13 +72,38 @@ func (form *CreateExpenseForm) Save() error {
 }
 
 func (form *CreateExpenseForm) validate() error {
-	form.validateContent().validateDate().summaryErrors()
+	form.validateExpenseType().
+		validateContent().
+		validateDate().
+		validateAmount().
+		summaryErrors()
 
 	if form.IsValid() {
 		return nil
 	}
 
 	return exceptions.NewUnprocessableContentError("Please check your input", form.Errors)
+}
+
+func (form *CreateExpenseForm) validateExpenseType() *CreateExpenseForm {
+	field := form.GetAttribute("ExpenseTypeId")
+
+	field.ValidateRequired()
+
+	if field.IsClean() {
+		expenseType := models.ExpenseType{ID: *form.Input.ExpenseTypeId}
+		expenseTypeRepo := repositories.NewExpenseTypeRepository(nil, database.Db)
+
+		if err := expenseTypeRepo.Find(&expenseType); err != nil {
+			field.AddError("invalid expense type")
+		}
+
+		if field.IsClean() {
+			form.Expense.ExpenseTypeId = expenseType.ID
+		}
+	}
+
+	return form
 }
 
 func (form *CreateExpenseForm) validateContent() *CreateExpenseForm {
@@ -84,9 +122,22 @@ func (form *CreateExpenseForm) validateDate() *CreateExpenseForm {
 	field := form.GetAttribute("Date")
 
 	field.ValidateRequired()
+	field.ValidateFormat(constants.DDMMYYYY_DateFormat, constants.HUMAN_DDMMYYYY_DateFormat)
 
 	if field.IsClean() {
 		form.Expense.Date = *form.Input.Date
+	}
+
+	return form
+}
+
+func (form *CreateExpenseForm) validateAmount() *CreateExpenseForm {
+	field := form.GetAttribute("Amount")
+
+	field.ValidateRequired()
+
+	if field.IsClean() {
+		form.Expense.Amount = *form.Input.Amount
 	}
 
 	return form

@@ -20,6 +20,10 @@ func NewExpenseTypeRepository(c *context.Context, db *gorm.DB) *ExpenseTypeRepos
 	}
 }
 
+func (repo *ExpenseTypeRepository) Find(expenseType *models.ExpenseType) error {
+	return repo.db.Table("expense_types").First(expenseType).Error
+}
+
 func (repo *ExpenseTypeRepository) List(expenseTypes *[]*models.ExpenseType) error {
 	return repo.db.Table("expense_types").Find(expenseTypes).Error
 }

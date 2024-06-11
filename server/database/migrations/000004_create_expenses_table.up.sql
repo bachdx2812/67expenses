@@ -5,6 +5,7 @@ CREATE TABLE expenses (
   user_id INT NOT NULL,
   expense_type_id INT NOT NULL,
   content TEXT,
+  amount INT NOT NULL,
   date TIMESTAMP(6) NOT NULL,
   created_at TIMESTAMP(6) NOT NULL,
   updated_at TIMESTAMP(6) NOT NULL

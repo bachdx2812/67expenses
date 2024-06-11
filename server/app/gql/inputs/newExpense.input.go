@@ -5,6 +5,8 @@ type NewExpenseInput struct {
 }
 
 type NewExpenseInputForm struct {
-	Content *string
-	Date    *string
+	ExpenseTypeId *int32
+	Content       *string
+	Date          *string
+	Amount        *int32
 }

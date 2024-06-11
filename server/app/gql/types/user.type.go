@@ -3,7 +3,7 @@ package gqlTypes
 import "server/app/models"
 
 type UserType struct {
-	User models.User
+	User *models.User
 }
 
 func (u *UserType) ID() int32 {
@@ -20,7 +20,7 @@ func (u *UserType) Phone() string {
 
 func (u *UserType) Family() *FamilyType {
 	return &FamilyType{
-		Family: u.User.Family,
+		Family: &u.User.Family,
 	}
 }
 

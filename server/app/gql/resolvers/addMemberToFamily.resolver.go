@@ -39,6 +39,6 @@ func (r *Resolver) AddMemberToFamily(ctx context.Context, args gqlInputs.AddMemb
 	}
 
 	return &gqlTypes.FamilyType{
-		Family: family,
+		Family: &family,
 	}, nil
 }

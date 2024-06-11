@@ -3,7 +3,7 @@ package gqlTypes
 import "server/app/models"
 
 type ExpenseType struct {
-	Expense models.Expense
+	Expense *models.Expense
 }
 
 func (e *ExpenseType) ID() int32 {

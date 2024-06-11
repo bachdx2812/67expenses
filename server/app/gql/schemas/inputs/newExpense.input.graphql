@@ -1,4 +1,6 @@
 input NewExpenseInput {
+  expenseTypeId: Int
   date: String
   content: String
+  amount: Int
 }

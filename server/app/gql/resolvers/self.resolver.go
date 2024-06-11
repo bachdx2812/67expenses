@@ -23,6 +23,6 @@ func (r *Resolver) Self(ctx context.Context) (*gqlTypes.UserType, error) {
 	}
 
 	return &gqlTypes.UserType{
-		User: *user,
+		User: user,
 	}, nil
 }

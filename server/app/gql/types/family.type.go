@@ -3,7 +3,7 @@ package gqlTypes
 import "server/app/models"
 
 type FamilyType struct {
-	Family models.Family
+	Family *models.Family
 }
 
 func (f *FamilyType) ID() int32 {
@@ -19,7 +19,7 @@ func (f *FamilyType) Users() []*UserType {
 
 	for i, user := range f.Family.Users {
 		users[i] = &UserType{
-			User: user,
+			User: &user,
 		}
 	}
 

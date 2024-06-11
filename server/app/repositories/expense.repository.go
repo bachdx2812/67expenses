@@ -21,5 +21,5 @@ func NewExpenseRepository(c *context.Context, db *gorm.DB) *ExpenseRepository {
 }
 
 func (repo *ExpenseRepository) Create(expense *models.Expense) error {
-	return repo.db.Create(expense).Error
+	return repo.db.Create(&expense).Error
 }

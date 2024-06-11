@@ -29,11 +29,6 @@ func (r *Resolver) CreateExpense(ctx context.Context, args gqlInputs.NewExpenseI
 	}
 
 	return &gqlTypes.ExpenseType{
-		Expense: models.Expense{
-			UserId: user.ID,
-			User:   *user,
-			// Date:    args.Date,
-			// Content: args.Content,
-		},
+		Expense: &expense,
 	}, nil
 }
